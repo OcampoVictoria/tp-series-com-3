@@ -4,7 +4,8 @@
 Sistema que permite guardar, buscar, listar y filtrar series de un mismo universo narrativo (mismo creador / guionista), tomando como caso de estudio las series del actor Lee Jong-suk. Es el primer paso hacia un sitema de recomendaciones que relacione series entre si.
 
 ## Integrantes
-Ocampo victoria (por ahora )
+Ocampo victoria, 
+Arteaga Lautaro
   
 ## Estructura del proyecto 
 | crossverse |
