@@ -36,7 +36,7 @@ def main():
       print(" ", e.titulo)
 
     print("\n--- búsquedas ---")
-    encontrado = arbol.buscar("Pinnochio", clave=lambda e: e.titulo.lower())
+    encontrado = arbol.buscar("pinnochio", clave=lambda e: e.titulo.lower())
     print("Buscar 'Pinnochio':", encontrado)
     no_encontrado = arbol.buscar("zzz", clave=lambda e: e.titulo.lower())
     print("Buscar 'zzz':", no_encontrado)
