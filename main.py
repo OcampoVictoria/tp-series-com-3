@@ -1,5 +1,6 @@
 from serie import Serie
 from gestor_series import GestorSeries
+from estructuras.arbol_binario import ArbolBST    #import nuevo
 
 def mostrar_menu():
         print("\n=== Sistema de Recomendacion de Series ===")
@@ -13,6 +14,10 @@ def main():
         gestor=GestorSeries()
         gestor.cargar_desde_json("series.json")
 
+        arbol = ArbolBST()
+        for elemento in gestor.listar():
+          arbol.insertar(elemento, clave=lambda e: e.titulo.lower())
+
         while True:
           mostrar_menu()
           opcion=input("Opcion a elegir: ")
@@ -22,14 +27,18 @@ def main():
              creador=input("Creador: ")
              año=int(input("Año: "))
              genero=input("Genero: ")
-             gestor.agregar(Serie(titulo, creador, año, genero))
+             nueva_serie=Serie(titulo,creador, año, genero)
+             gestor.agregar(nueva_serie)
+             arbol.insertar(nueva_serie, clave=lambda e: e.titulo.lower())
              print("Serie agregada.")
 
           elif opcion=="2":
              texto=input("Buscar por titulo:")
-             resultados=gestor.buscar(texto)
-             for s in resultados:
-              print(s)
+             resultados=arbol.buscar(texto.lower(), clave=lambda e: e.titulo.lower())
+             if resultados:
+              print(resultados)
+             else:
+                 print("No se encontro.")
 
           elif opcion=="3":
               for s in gestor.listar():

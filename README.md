@@ -23,7 +23,7 @@ Arteaga Lautaro
    
 ## Estado actual
 - [x] clase `Serie` con encapsulamiento
-- [x] Clase `GestorSeries` para gestiom de datos
+- [x] Clase `GestorSeries` para gestion de datos
 - [x] Carga de datos desde JSON
 - [x] Operaciones: agregar, buscar, listar, filtrar
 - [x] Interfaz de terminal
