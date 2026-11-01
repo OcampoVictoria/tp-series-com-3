@@ -3,6 +3,7 @@ from gestor_series import GestorSeries
 from estructuras.avl import AVL
 from estructuras.arbol_general import ArbolGeneral
 from estructuras.heap import HeapMaximos
+from relaciones import construir_grafo_series, agregar_serie_al_grafo #impor nuevo
 
 def prioridad(serie):
     #mas reciente = mas prioridad (se ordena por año de estren)
@@ -52,6 +53,8 @@ def main():
 
         heap = HeapMaximos.desde_lista(gestor.listar(), clave=prioridad)
 
+        grafo = construir_grafo_series(gestor.listar())
+
         while True:
           mostrar_menu()
           opcion=input("Elegir una Opcion: ")
@@ -62,6 +65,7 @@ def main():
              año=int(input("Año: "))
              genero=input("Genero: ")
              nueva_serie=Serie(titulo,creador, año, genero)
+             agregar_serie_al_grafo(grafo, nueva_serie, gestor.listar())
              gestor.agregar(nueva_serie)
              avl.insertar(nueva_serie, clave=lambda e: e.titulo.lower())
              heap.insertar(nueva_serie)
@@ -96,7 +100,19 @@ def main():
               for posicion, s in enumerate(heap.top_n(n), start=1):
                   print(f"{posicion}. {s.titulo:<25} {s.año}")
 
-          elif opcion =="7":
+          elif opcion == "7":
+              texto = input("¿Relacionadas con qué serie? ")
+              serie = avl.buscar(texto.lower(), clave=lambda e: e.titulo.lower())
+              if serie is None:
+                  print("No se encontro esa serie.")
+              else:
+                   vecinos = sorted(grafo.vecinos(serie.titulo), key=lambda x: x[1], reverse=True)
+                   if not vecinos:
+                       print("No tiene series relacionadas.")
+                   for titulo, peso in vecinos:
+                       print(f" {titulo} (relacion {peso})")
+         
+          elif opcion =="8":
               print("¡Hasta luego!")
               break
 
