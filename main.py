@@ -2,6 +2,11 @@ from serie import Serie
 from gestor_series import GestorSeries
 from estructuras.avl import AVL
 from estructuras.arbol_general import ArbolGeneral
+from estructuras.heap import HeapMaximos
+
+def prioridad(serie):
+    #mas reciente = mas prioridad (se ordena por año de estren)
+    return serie.año
 
 def construir_arbol_categorias(series):
     #armar la jerarquia decada, año, serie a partir de las series cargadas.
@@ -32,7 +37,8 @@ def mostrar_menu():
         print("3. Listar series")
         print("4. Filtrar series")
         print("5. Explorar Categorias")
-        print("6. Salir")
+        print("6. Top N series mas recientes")
+        print("7. Salir")
 
 def main():
         gestor=GestorSeries()
@@ -43,6 +49,8 @@ def main():
           avl.insertar(serie, clave=lambda e: e.titulo.lower())
 
         arbol_categorias = construir_arbol_categorias(gestor.listar())
+
+        heap = HeapMaximos.desde_lista(gestor.listar(), clave=prioridad)
 
         while True:
           mostrar_menu()
@@ -56,6 +64,7 @@ def main():
              nueva_serie=Serie(titulo,creador, año, genero)
              gestor.agregar(nueva_serie)
              avl.insertar(nueva_serie, clave=lambda e: e.titulo.lower())
+             heap.insertar(nueva_serie)
              print("Serie agregada.")
 
           elif opcion=="2":
@@ -82,6 +91,12 @@ def main():
                   print(f" - {categoria}")
 
           elif opcion=="6":
+              n = int(input("¿Cuantas series queres ver?"))
+              print(f"\nTOP {n}")
+              for posicion, s in enumerate(heap.top_n(n), start=1):
+                  print(f"{posicion}. {s.titulo:<25} {s.año}")
+
+          elif opcion =="7":
               print("¡Hasta luego!")
               break
 
