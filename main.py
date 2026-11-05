@@ -3,7 +3,8 @@ from gestor_series import GestorSeries
 from estructuras.avl import AVL
 from estructuras.arbol_general import ArbolGeneral
 from estructuras.heap import HeapMaximos
-from relaciones import construir_grafo_series, agregar_serie_al_grafo #impor nuevo
+from relaciones import construir_grafo_series, agregar_serie_al_grafo 
+from algoritmos.recorridos import dfs, camino_mas_corto
 
 def prioridad(serie):
     #mas reciente = mas prioridad (se ordena por año de estren)
@@ -39,7 +40,14 @@ def mostrar_menu():
         print("4. Filtrar series")
         print("5. Explorar Categorias")
         print("6. Top N series mas recientes")
-        print("7. Salir")
+        print("7. Series relacionadas")
+        print("8. Camino entre dos series (BFS)")
+        print("9. Explorar universo de una serie (DFS)")
+        print("10. Salir")
+
+def buscar_serie(avl, texto):
+    #busca por titulo exacto en el AVL. devuelve la serie o None
+    return avl.buscar(texto.lower(), clave=lambda e: e.titulo.lower())
 
 def main():
         gestor=GestorSeries()
@@ -73,7 +81,7 @@ def main():
 
           elif opcion=="2":
              texto=input("Buscar por titulo:")
-             resultados=avl.buscar(texto.lower(), clave=lambda e: e.titulo.lower())
+             resultados=buscar_serie(avl, texto)
              if resultados:
               print(resultados)
              else:
@@ -102,7 +110,7 @@ def main():
 
           elif opcion == "7":
               texto = input("¿Relacionadas con qué serie? ")
-              serie = avl.buscar(texto.lower(), clave=lambda e: e.titulo.lower())
+              serie = buscar_serie(avl, texto)
               if serie is None:
                   print("No se encontro esa serie.")
               else:
@@ -111,10 +119,33 @@ def main():
                        print("No tiene series relacionadas.")
                    for titulo, peso in vecinos:
                        print(f" {titulo} (relacion {peso})")
+
+          elif opcion == "8":
+              origen = buscar_serie(avl, input("Serie de origen: "))
+              destino = buscar_serie(avl, input("Serie de destino: "))
+              if origen is None or destino is None:
+                  print("No se encontro alguna de las series")
+              else:
+                 camino = camino_mas_corto(grafo, origen.titulo, destino.titulo)
+                 if camino is None:
+                     print("No hay conexion entre esas series.")
+                 else:
+                     print(" -> ".join(camino))
+                     print(f"({len(camino) - 1} saltos)")
+                  
+          elif opcion == "9":
+              serie = buscar_serie(avl, input("¿Explorar desde que serie? "))
+              if serie is None:
+                    print("No se encontro esa serie.")
+              else:
+                 print(f"\nUniverso de {serie.titulo}(en profundidad):")
+                 for titulo in dfs(grafo, serie.titulo):
+                  print(f" -{titulo}")
+              
          
-          elif opcion =="8":
-              print("¡Hasta luego!")
-              break
+          elif opcion =="10":
+               print("¡Hasta luego!")
+               break
 
           else:
               print("Opcion invalida.")
