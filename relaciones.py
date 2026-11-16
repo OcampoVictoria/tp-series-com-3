@@ -34,3 +34,7 @@ def agregar_serie_al_grafo(grafo, nueva, existentes):
         peso = coincidencias(nueva, otra)
         if peso > 0:
             grafo.agregar_arista(nueva.titulo, otra.titulo, peso)
+
+def costo_arista(peso):
+    """Similitud inversa: cuanto más parecidas son dos series, menos cuesta ir de una a otra."""
+    return 1 / peso

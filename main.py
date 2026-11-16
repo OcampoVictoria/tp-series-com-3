@@ -5,6 +5,8 @@ from estructuras.arbol_general import ArbolGeneral
 from estructuras.heap import HeapMaximos
 from relaciones import construir_grafo_series, agregar_serie_al_grafo 
 from algoritmos.recorridos import dfs, camino_mas_corto
+from relaciones import construir_grafo_series, agregar_serie_al_grafo, costo_arista
+from algoritmos.camino_minimo import camino_minimo
 
 def prioridad(serie):
     #mas reciente = mas prioridad (se ordena por año de estren)
@@ -43,7 +45,8 @@ def mostrar_menu():
         print("7. Series relacionadas")
         print("8. Camino entre dos series (BFS)")
         print("9. Explorar universo de una serie (DFS)")
-        print("10. Salir")
+        print("10. Mejor camino de afinidad")
+        print("11. Salir")
 
 def buscar_serie(avl, texto):
     #busca por titulo exacto en el AVL. devuelve la serie o None
@@ -142,8 +145,21 @@ def main():
                  for titulo in dfs(grafo, serie.titulo):
                   print(f" -{titulo}")
               
+          elif opcion == "10":
+              origen = buscar_serie(avl, input("Serie de origen: "))
+              destino = buscar_serie(avl, input("Serie de destino: "))
+              if origen is None or destino is None:
+                print("No se encontró alguna de las series.")
+              else:
+                  camino, costo = camino_minimo(grafo, origen.titulo, destino.titulo, costo_arista)
+                  if camino is None:
+                      print("No hay conexión entre esas series.")
+                  else:
+                      print("Camino de mayor afinidad: " + " -> ".join(camino))
+                      print(f"(costo total {costo:.2f})")
          
-          elif opcion =="10":
+         
+          elif opcion =="11":
                print("¡Hasta luego!")
                break
 
