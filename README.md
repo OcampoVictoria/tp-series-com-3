@@ -83,3 +83,7 @@ Arteaga Lautaro
 - Las series agregadas desde el menu no se guardan en `series.json`.
 - El arbol de categorias no incluye las series agregadas hasta reiniciar el programa.
 - La busqueda por titulo es exacta, no parcial.
+- > Nota: las salidas de este documento corresponden al catálogo inicial de 6 series.
+> Para la demo se amplió `series.json` a 11 series, por lo que ahora `probar_grafo.py`
+> muestra 11 vértices y 21 aristas, y la serie más conectada es *Pinnochio* (grado 8).
+> Los caminos de ejemplo de BFS y Dijkstra se mantienen.

@@ -1,5 +1,10 @@
 # Análisis — Optimización: camino de mayor afinidad 
 
+> Nota: las salidas de este documento corresponden al catálogo inicial de 6 series.
+> Para la demo se amplió `series.json` a 11 series, por lo que ahora `probar_grafo.py`
+> muestra 11 vértices y 21 aristas, y la serie más conectada es *Pinnochio* (grado 8).
+> Los caminos de ejemplo de BFS y Dijkstra se mantienen.
+
 ## 1. ¿Qué resolvimos?
 Dadas dos series, encontrar la secuencia de series intermedias con la que se pasa
 de una a otra de la forma más "cómoda": cada paso va a una serie lo más parecida

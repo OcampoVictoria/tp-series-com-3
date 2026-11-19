@@ -1,5 +1,10 @@
 # Análisis — Grafos y Recorridos (versiones 5 y 6)
 
+> Nota: las salidas de este documento corresponden al catálogo inicial de 6 series.
+> Para la demo se amplió `series.json` a 11 series, por lo que ahora `probar_grafo.py`
+> muestra 11 vértices y 21 aristas, y la serie más conectada es *Pinnochio* (grado 8).
+> Los caminos de ejemplo de BFS y Dijkstra se mantienen.
+
 ## 1. Modelo del grafo
 - **Vértice:** una serie, identificada por su título.
 - **Arista:** dos series están conectadas si comparten creador o al menos un género.
